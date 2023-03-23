@@ -6,7 +6,8 @@ class JwtService
     end
 
     def self.decode(token:)
-        JWT.decode(token, self.secret).first
+        decoded = JWT.decode(token, self.secret).first
+        HashWithIndifferentAccess.new decoded
     end
 
     def self.secret
