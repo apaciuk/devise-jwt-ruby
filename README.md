@@ -2,14 +2,14 @@
 
 ## Encode and decode JW Tokens with Devise, inc via Warden custom strategy module and config lines in config/devise.rb
 
-Service object JWTService handles the credentials jwt_secret on decode of user token
+Service object JWTService handles the credentials jwt_secret on decode/encode of user token
 
 #### basic console example (sub is the user id, in this case 1)
 
-> token = JwtService.encode(payload: {"sub" => 1})
-> => "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjF9.ayfSB_CrxosN0q0PhkYLZClwzBeOX5syWuOZwRjVpQ8"
-> decoded = JwtService.decode(token: token)
-> => {"sub"=>1}
+token = JwtService.encode(payload: { 'sub' => user_id })
+=> "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTY3OTYyMzI1N30.uQ50qFBq2_0fBAF77ZnrDeNss2mFxT_pIXKJL-It_d0"
+decoded = JwtService.decode(token: token)
+=> {"sub"=>1, "exp"=>1679623257}
 
 # Curl or Postman
 
