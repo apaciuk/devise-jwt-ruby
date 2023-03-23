@@ -1,6 +1,7 @@
 
 class JwtService
-    def self.encode(payload:)
+    def self.encode(payload:, exp: 6.hours.from_now)
+        payload[:exp] = 6.hours.from_now.to_i
         JWT.encode(payload, self.secret)
     end
 
