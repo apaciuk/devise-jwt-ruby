@@ -1,7 +1,7 @@
 class ValidateTokenService 
     
     def initialize(token)
-        @token = request.headers['Authorization'].split(' ').last
+        @token = token
     end
     
     def call
