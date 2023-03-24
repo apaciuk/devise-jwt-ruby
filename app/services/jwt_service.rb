@@ -7,7 +7,16 @@ class JwtService
     end
 
     def self.decode(token:)
-        decoded = JWT.decode(token, self.secret, true, { algorithm: ALGO }).first
+        decoded = JWT.decode(
+        token, 
+        self.secret, 
+        true,
+        iss: 'api.example.com',
+        # verify_iss: true,
+        aud: 'example.com',
+        # verify_aud: true,
+        algorithm: ALGO
+        ).first
         HashWithIndifferentAccess.new decoded
     end
 
