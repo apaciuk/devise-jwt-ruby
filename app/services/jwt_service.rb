@@ -1,3 +1,4 @@
+require 'jwt'
 
 class JwtService
     ALGO = 'HS256'
@@ -7,7 +8,7 @@ class JwtService
     end
 
     def self.decode(token:)
-        decoded = JWT.decode(
+        JWT.decode(
         token, 
         self.secret, 
         true,
@@ -17,8 +18,8 @@ class JwtService
         # verify_aud: true,
         algorithm: ALGO
         ).first
-        HashWithIndifferentAccess.new decoded
-    end
+       # HashWithIndifferentAccess.new(decoded_token)
+    end 
 
     def self.secret
         Rails.application.credentials.devise[:jwt_secret_key]
