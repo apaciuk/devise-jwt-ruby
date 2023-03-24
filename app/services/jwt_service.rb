@@ -14,11 +14,4 @@ class JwtService
     def self.secret
         Rails.application.credentials.devise[:jwt_secret_key]
     end 
-
-    private 
-
-    def self.rsa_private
-        @rsa_private ||= OpenSSL::PKey::RSA.generate 2048
-    end
-
 end
