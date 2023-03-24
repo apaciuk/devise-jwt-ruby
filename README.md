@@ -23,7 +23,7 @@ curl -XPOST -i -H "Content-Type: application/json" -d '{ "user": { "email": "tes
 
 ## Sign out
 
-curl -XDELETE -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2Nzk2Njk3MzZ9.AtMEApZg1l9JQdD_yHyFc0gOb6C3NNfx1enPwn7bb-A" -H "Content-Type: application/json" http://localhost:3000/users/sign_out # (use Bearer token from login, not this one)
+curl -XDELETE -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNjc5Njg3NDg0fQ.O39_1tD67Kzw2D_9JOoSrQFvFTHj_AQCqRKUUQZNhq8" -H "Content-Type: application/json" http://localhost:3000/users/sign_out # (use Bearer token from login, not this one)
 
 methods
 

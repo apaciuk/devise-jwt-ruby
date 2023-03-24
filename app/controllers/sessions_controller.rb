@@ -1,55 +1,47 @@
 class SessionsController < Devise::RegistrationsController
     include ActionController::MimeResponds
     include Devise::Controllers::Helpers
-    respond_to :json 
-    attr_accessor :user_id, :token
+    respond_to :json
 
     def respond_with(resource, _opts = {})
-        user = User.find_by(email: resource.email)
-        user_id = user.id
-        token = JwtService.encode(payload: { user_id: user_id })
-        render json: {
-            user_id: user_id,
-            token: token,
-            status: {
-            code: 200,
-            message: 'Logged in successfully'
-            }
-        }
+        user = User.find_by(email: params[:email])
+        if user&.authenticate(params[:password])
+            token = JwtService.encode(payload: { user_id: user.id })
+            header = { 'Authorization' => 'Bearer ' + token }
+            header.each do |key, value|
+            response.headers[key] = value
+        end
+            render json: { token: token }, status: :ok
+        else
+            render json: { error: 'unauthorized' }, status: :unauthorized
+        end
     end
 
     def respond_to_on_destroy
-        user = User.find_by(email: resource.email).where(id: resource.id).first
-        user_id = user.id
-       # authorize_request(user_id)
-       # user_id = user.id
-       # authorize_request(user_id)
-       # token = JwtService.encode(payload: { 'sub' => user_id }) 
-       # decoded = JwtService.decode(token: token)
-        #if token(payload: decoded) == decoded(token: token)
-        # token.destroy
-        if user.destroy
+        get_bearer_token.present? ? head(:ok) : head(:unauthorized)
         render json: {
             status: {
             code: 200,
             message: 'Logged out successfully'
             }
-        }
-        else
-        render json: {
-            status: {
-            code: 400,
-            message: 'Error logging out'
-            }
-        }
-        end
+        }, status: :ok
     end
 
 
     private 
 
     def user_params
-        params.permit(:id, :email, :password)
+        params.permit(:id, :email, :password, :token)
     end
-end
+
+    def get_bearer_token
+        pattern = /^Bearer /
+        header  = request.headers["Authorization"]
+        header.gsub(pattern, '') if header && header.match(pattern)
+    end
+end 
+
+
+
+
 

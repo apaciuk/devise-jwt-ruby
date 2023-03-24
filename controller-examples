@@ -13,6 +13,20 @@ class Api::V1::UsersController < ApplicationController
     end
 end
 
+ token = JwtService.encode(payload: { 'sub' => resource.email })
+        header = { 'Authorization' => 'Bearer ' + token }
+        header.each do |key, value|
+            response.headers[key] = value
+        end
+        render json: {
+            email: resource.email,
+            token: token,
+            status: {
+            code: 200,
+            message: 'Logged in successfully'
+            }
+        }, status: :ok, location: after_sign_in_path_for(resource)
+
 # Path: app/controllers/api/v1/sessions_controller.rb
 class Api::V1::SessionsController < ApplicationController
     def create

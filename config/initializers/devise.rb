@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
-## Custom strategy module/class for Devise to use Ruby JWT
+## Custom strategy module/class for Devise to use Ruby JWT  
 require 'devise/strategies/authenticatable'
 require 'jwt'
 module Devise
   module Strategies
     class JWT < Base
+
       def valid?
         request.headers['Authorization'].present?
       end
+
       def authenticate!
         payload = JwtService.decode(token: token)
         success! User.find(payload['sub'])
@@ -18,13 +20,14 @@ module Devise
         fail! 'Auth token is invalid'
       rescue
         fail!
-      end
+      end 
 
       private 
 
       def token
         request.headers.fetch('Authorization', '').split(' ').last
       end
+      
     end
   end
 end
@@ -40,7 +43,7 @@ Warden::Strategies.add(:jwt, Devise::Strategies::JWT)
 Devise.setup do |config|
 # JWT strategy as the authentication option for the user scope, Devise authenticated routes will now allow JWT as the authentication source
 config.warden do |config|
-  config.default_strategies(:scope => :user).unshift :jwt
+  config.default_strategies(:scope => :user).unshift :jwt, Devise::Strategies::JWT
 end
 
   # The secret key used by Devise. Devise uses this key to generate
@@ -297,7 +300,7 @@ end
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ['*/*', :html]
+  config.navigational_formats = []
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
