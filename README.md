@@ -23,11 +23,11 @@ curl -XPOST -i -H "Content-Type: application/json" -d '{ "user": { "email": "tes
 
 ## Sign out
 
-curl -XDELETE -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhODQxODcxMy1iMTc5LTQ2ODYtYWY0NC1iNjBjYjBmMWQ2ODMiLCJqdGkiOiJhODQxODcxMy1iMTc5LTQ2ODYtYWY0NC1iNjBjYjBmMWQ2ODMiLCJzdWIiOiIxIiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNjc5NTcwNjI4LCJleHAiOjE2ODA4NjY2Mjh9.-OY5SWbjMcZm_1zat4WE9tWxPO43E0agPWxq4WSy-so" -H "Content-Type: application/json" http://localhost:3000/users/sign_out # (use Bearer token from login, not this one)
+curl -XDELETE -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2Nzk2Njk3MzZ9.AtMEApZg1l9JQdD_yHyFc0gOb6C3NNfx1enPwn7bb-A" -H "Content-Type: application/json" http://localhost:3000/users/sign_out # (use Bearer token from login, not this one)
 
 methods
 
-u = User.find_by(email:)
+u = User.find_by(email: "test@example.com")
 
 u.active_for_authentication?
 => true
