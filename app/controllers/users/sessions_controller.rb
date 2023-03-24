@@ -8,7 +8,7 @@ class Users::SessionsController < Devise::SessionsController
         sign_in(resource_name, resource)
         yield resource if block_given?
 
-        # Deviate from the default behavior and issue a jwt token on sign in
+        # Deviate from the default behavior and issue a jwt token on sign in, attach it to the response headers as Bearer token
         token = JwtService.encode( payload: { user_id: resource.id } )
         header = { 'Authorization' => 'Bearer ' + token }
             header.each do |key, value|
@@ -37,10 +37,6 @@ class Users::SessionsController < Devise::SessionsController
     end
 
     private 
-
-    def user_params
-        params.permit(:id, :email, :password, :token)
-    end 
 
     def verify_jwt_token 
         head :unauthorized if request.headers['Authorization'].nil?
