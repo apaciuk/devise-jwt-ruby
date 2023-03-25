@@ -1,4 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
+   # before_action :verify_jwt_token, only: [:destroy]
     include ActionController::MimeResponds
     include Devise::Controllers::Helpers
     respond_to :json
@@ -41,9 +42,8 @@ class Users::SessionsController < Devise::SessionsController
     def verify_jwt_token 
         head :unauthorized if request.headers['Authorization'].nil?
         token = request.headers['Authorization'].split(' ').last
-        puts "token: #{token}"
-        #return false unless token
-       # ValidateTokenService.new(token).call
+        return false unless token
+        ValidateTokenService.new(token).call
     end
 
 end 

@@ -5,8 +5,10 @@ class ValidateTokenService
     end
     
     def call
-        puts "token: #{@token}"
-       # decoded_token = JwtService.decode(token: @token)
+        return false if @token.nil?
+        decoded_token = JwtService.decode(token: @token)
+        return false if decoded_token.empty?
+        puts "decoded_token: #{decoded_token}"
     
        # decoded_token = JwtService.decode(token: @token)
        #  return false if decoded_token.empty?
