@@ -1,8 +1,17 @@
 # devise-jwt-ruby
 
-## Encode and decode JW Tokens with Devise, inc via Warden custom strategy module and config lines in config/devise.rb
+## Encode and decode JW Tokens with Devise, using JWT service objects generated with ruby/jwt gem
 
-Service object JWTService handles the credentials jwt_secret on decode/encode of user token
+Basic Service object JWTService handles the credentials jwt_secret on decode/encode of user token
+Is completely independent of any devise extras, using the default warden sign in methods & the JWT service adding a token to headers, which service is again used to check before allowing logout.
+
+Front end would grab the token from Auth headers (Bearer) and send to the backend sign out route (as Authorization: Bearer token) where it is processed as above.
+
+Avoids extra Warden strategies or extra devise config, only cors.rb to expose Authorization headers
+
+- Files needed to put in another app are all in the services folder, with the 2 devise reg & session overide controllers/routes, and cors.rb.
+
+Ensure devise initializzer has config.navigational_formats = [].
 
 ### Mandatory after bundle and db setup
 
@@ -28,7 +37,7 @@ decoded = JwtService.decode(token: token)
 
 ## Sign up
 
-curl -XPOST -H "Content-Type: application/json" -d '{ "user": { "email": "test@example.com", "password": "12345678" } }' http://localhost:3000/users
+curl -XPOST -H "Content-Type: application/json" -d '{ "user": { "email": "test@example.com", "password": "12345678" } }' http://localhost:3000/sign_up
 
 ## Sign in
 
