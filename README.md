@@ -17,7 +17,7 @@ Ensure devise initializer has config.navigational_formats = [] and the jwt_secre
 
 Algorithm is HS256, in jwt_service, with options for iss and aud.
 
-Is also a template repo if want to kick start a Rails 7 API with Devise/JWT from scrat apart from the auth setup.
+Is also a template repo if want to kick start a Rails 7 API with Devise/JWT from scrath apart from the auth setup.
 
 ### Mandatory after bundle and db setup
 
@@ -39,7 +39,7 @@ token = JwtService.encode(payload: { 'sub' => user_id })
 decoded = JwtService.decode(token: token)
 => {"sub"=>1, "exp"=>1679623257}
 
-# Curl or Postman (Is tested both, as there are only 3 routes used, further testing can be done with RSpec/Factory etc if developed further.
+##### Curl or Postman (Is tested both, as there are only 3 routes used, further testing can be done with RSpec/Factory etc if developed further.
 
 - Sign up
 
