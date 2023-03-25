@@ -5,6 +5,12 @@ class ValidateTokenService
     end
     
     def call
+        validate_token
+    end 
+
+    private 
+
+    def validate_token 
         return false if @token.nil?
         decoded_token = JwtService.decode(token: @token)
         return false if decoded_token.empty?
@@ -17,6 +23,6 @@ class ValidateTokenService
         false
         rescue JWT::DecodeError
         false
-    end
+    end 
 
 end 

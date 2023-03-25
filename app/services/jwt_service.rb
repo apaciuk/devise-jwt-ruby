@@ -3,7 +3,7 @@ require 'jwt'
 class JwtService
     ALGO = 'HS256'
     def self.encode(payload:, exp: 6.hours.from_now)
-        payload[:exp] = 6.hours.from_now.to_i
+        payload[:exp] = exp.to_i
         JWT.encode(payload, self.secret)
     end
 
@@ -18,7 +18,7 @@ class JwtService
         # verify_aud: true,
         algorithm: ALGO
         ).first
-       # HashWithIndifferentAccess.new(decoded_token)
+        HashWithIndifferentAccess.new(decoded_token)
     end 
 
     def self.secret
