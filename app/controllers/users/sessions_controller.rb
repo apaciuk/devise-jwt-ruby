@@ -41,6 +41,7 @@ class Users::SessionsController < Devise::SessionsController
 
     def verify_jwt_token 
         head :unauthorized if request.headers['Authorization'].nil?
+        head :unauthorized unless request.headers['Authorization'].split(' ').first == 'Bearer'
         token = request.headers['Authorization'].split(' ').last
         return false unless token
         ValidateTokenService.new(token).call

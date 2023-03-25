@@ -18,7 +18,7 @@ class JwtService
         # verify_aud: true,
         algorithm: ALGO
         ).first
-        HashWithIndifferentAccess.new(decoded_token)
+      #HashWithIndifferentAccess.new(decoded_token)
     end 
 
     def self.secret
