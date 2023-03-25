@@ -1,9 +1,4 @@
 class Users::SessionsController < Devise::SessionsController
-   # before_action :verify_jwt_token, only: [:destroy]
-    include ActionController::MimeResponds
-    include Devise::Controllers::Helpers
-    respond_to :json
-
     def respond_with(resource, _opts = {})
         self.resource = warden.authenticate!(auth_options)
         sign_in(resource_name, resource)
@@ -28,7 +23,6 @@ class Users::SessionsController < Devise::SessionsController
     end
 
     def respond_to_on_destroy
-        verify_jwt_token
         render json: {
             status: {
                 code: 200,
@@ -36,17 +30,6 @@ class Users::SessionsController < Devise::SessionsController
             }
         }, status: :ok
     end
-
-    private 
-
-    def verify_jwt_token 
-        head :unauthorized if request.headers['Authorization'].nil?
-        head :unauthorized unless request.headers['Authorization'].split(' ').first == 'Bearer'
-        token = request.headers['Authorization'].split(' ').last
-        return false unless token
-        ValidateTokenService.new(token).call
-    end
-
 end 
 
 
