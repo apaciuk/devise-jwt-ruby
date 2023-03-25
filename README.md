@@ -9,7 +9,7 @@ Front end would grab the token from Auth headers (Bearer) and send to the backen
 
 Avoids extra Warden strategies or extra devise config, only cors.rb to expose Authorization headers
 
-- Files needed to put in another app are all in the services folder, with the 3 methods devise reg & session overide controllers/routes, and cors.rb, with :jwt_authenticatable in the user model.
+- Files needed to put in another app are all in the services folder, with the 3 methods devise reg & session overide controllers/routes, and cors.rb.
 
 The verify_jwt_token method, which calls the validate_token_service, here is in AppliationController as a global callback, but can be sessions etc
 
