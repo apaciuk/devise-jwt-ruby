@@ -4,6 +4,19 @@
 
 Service object JWTService handles the credentials jwt_secret on decode/encode of user token
 
+### Mandatory after bundle and db setup
+
+delete config credentials.yml file
+run rake secret to get new secret
+EDITOR="whatever --wait" rails credentials:edit
+Grab new rake secret and put in credentials file as so
+
+- under other keys
+  devise:
+  jwt_secret_key: generated new secret key
+
+As the JWT services uses this to encode/decode JWts, and wont work if its not set and named like above.
+
 #### basic console example (sub is the user id, in this case 1)
 
 token = JwtService.encode(payload: { 'sub' => user_id })
