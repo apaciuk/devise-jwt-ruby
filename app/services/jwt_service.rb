@@ -1,13 +1,16 @@
 require 'jwt'
 
-class JwtService
+class JwtService < ApplicationService
     ALGO = 'HS256'
 
     private 
     
-    def self.encode(payload:, exp: 6.hours.from_now)
+    def self.encode(payload:, exp: 1.year.from_now)
         payload[:exp] = exp.to_i
-        JWT.encode(payload, self.secret)
+        JWT.encode(
+        payload, 
+        self.secret
+        ).to_s
     end
 
     def self.decode(token:)
