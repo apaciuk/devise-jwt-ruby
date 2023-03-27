@@ -43,15 +43,15 @@ decoded = JwtService.decode(token: token)
 
 - Sign up
 
-curl -XPOST -H "Content-Type: application/json" -d '{ "user": { "email": "test@example.com", "password": "12345678" } }' http://localhost:3000/sign_up
+curl -XPOST -i -H "Content-Type: application/json" -d '{ "user": { "email": "test@example.com", "password": "12345678" } }' http://localhost:3000/sign_up (no token)
 
 - Sign in
 
-curl -XPOST -i -H "Content-Type: application/json" -d '{ "user": { "email": "test@example.com", "password": "12345678" } }' http://localhost:3000/users/sign_in # (grab token for signout, and member login))
+curl -XPOST -i -H "Content-Type: application/json" -d '{ "user": { "email": "test@example.com", "password": "12345678" } }' http://localhost:3000/sign_in # (grab token for signout, and member login))
 
 - Sign out
 
-curl -XDELETE -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNjc5Njg3NDg0fQ.O39_1tD67Kzw2D_9JOoSrQFvFTHj_AQCqRKUUQZNhq8" -H "Content-Type: application/json" http://localhost:3000/users/sign_out # (use Bearer token from sign_in, not this one)
+curl -XDELETE -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTcxMTU0NjMzNX0.DFzDpERdxi1y6-IbJ7Xi1r0WowRL2je-vhjDZAAB_c0" -H "Content-Type: application/json" http://localhost:3000/sign_out # (use Bearer token from sign_in, not this one)
 
 methods
 
